@@ -26,3 +26,15 @@ ul.errorlist > li {
 .glyphicon-star.active {
     color: #FDB230;
 }
+
+.post {
+    margin-bottom: 70px;
+}
+
+.date {
+    color: #828282;
+}
+
+.content {
+    margin-left: 40px;
+}

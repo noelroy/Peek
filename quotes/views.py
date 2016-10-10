@@ -1,7 +1,10 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import UserForm
+from .models import Category, Tags, Quotes, QuotesTags
+
+IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 # Create your views here.
 
@@ -40,6 +43,7 @@ def login_user(request):
     else:
         return render(request, 'quotes/index.html')
 
+
 def register(request):
     if not request.user.is_authenticated():
         form = UserForm(request.POST or None)
@@ -60,3 +64,13 @@ def register(request):
         return render(request, 'quotes/register.html', context)
     else:
         return render(request, 'quotes/index.html')
+
+
+def quote_list(request):
+    quotes = Quotes.objects.order_by('created_date')
+    return render(request, 'quotes/quotes_list.html', {'quote_list': quotes})
+
+
+def quote_detail(request, pk):
+    quote = get_object_or_404(Quotes, pk=pk)
+    return render(request, 'quotes/quote_detail.html', {'quote': quote})
