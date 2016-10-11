@@ -51,6 +51,16 @@
 
     </div>
 </nav>
+{% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> {{ error_message }}
+    </div>
+{% endif %}
+{% if success_message %}
+    <div class="alert alert-success" role="alert">
+        <strong>Oh snap!</strong> {{ success_message }}
+    </div>
+{% endif %}
 {% block body %}
 {% endblock %}
 </body>

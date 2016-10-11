@@ -3,6 +3,7 @@ from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404
 from .forms import UserForm
 from .models import Category, Tags, Quotes, QuotesTags
+from django.contrib.auth.decorators import login_required
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
@@ -56,8 +57,7 @@ def register(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
-                    login(request, user)
-                    return render(request, 'quotes/index.html')
+                    return render(request, 'quotes/login.html', {'success_message': 'Your account has been successfully created'})
         context = {
             "form": form,
         }
@@ -66,11 +66,13 @@ def register(request):
         return render(request, 'quotes/index.html')
 
 
+@login_required(login_url='/quotes/login_user/')
 def quote_list(request):
     quotes = Quotes.objects.order_by('created_date')
     return render(request, 'quotes/quotes_list.html', {'quote_list': quotes})
 
 
+@login_required(login_url='/quotes/login_user/')
 def quote_detail(request, pk):
     quote = get_object_or_404(Quotes, pk=pk)
     return render(request, 'quotes/quote_detail.html', {'quote': quote})
