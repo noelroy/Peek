@@ -5,6 +5,9 @@ from .forms import UserForm
 from .models import Category, Tags, Quotes, QuotesTags
 from django.contrib.auth.decorators import login_required
 
+import requests
+import json
+
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 # Create your views here.
