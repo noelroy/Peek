@@ -14,7 +14,10 @@ def index(request):
     if not request.user.is_authenticated():
         return render(request, 'quotes/login.html')
     else:
-        return render(request, 'quotes/index.html')
+        r = requests.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
+        ranquote = r.json()
+        ranquote = {'ranquote':ranquote}
+        return render(request, 'quotes/index.html',ranquote)
 
 
 def logout_user(request):

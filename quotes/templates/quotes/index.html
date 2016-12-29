@@ -5,6 +5,11 @@
 <div class="albums-container container-fluid">
 
     <h1>Hello Welcome {{ request.user.username }}</h1>
+    <br><hr>
+
+    {% for x in ranquote %}
+    	{{x.ID}} : {{x.content}}<hr>
+    {% endfor %}
 
 </div>
 {% endblock %}
