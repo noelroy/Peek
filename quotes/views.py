@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import UserForm
 from .models import Category, Tags, Quotes, QuotesTags
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,7 @@ IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 def index(request):
     if not request.user.is_authenticated():
-        return render(request, 'quotes/login.html')
+        return redirect('/login_user')
     else:
         r = requests.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
         ranquote = r.json()
@@ -41,14 +41,14 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'quotes/index.html')
+                    return redirect('/quotes/')
                 else:
                     return render(request, 'quotes/login.html', {'error_message': 'Your account has been disabled'})
             else:
                 return render(request, 'quotes/login.html', {'error_message': 'Invalid login'})
         return render(request, 'quotes/login.html')
     else:
-        return render(request, 'quotes/index.html')
+        return redirect('/quotes/')
 
 
 def register(request):
@@ -69,7 +69,7 @@ def register(request):
         }
         return render(request, 'quotes/register.html', context)
     else:
-        return render(request, 'quotes/index.html')
+        return redirect('/quotes/')
 
 
 @login_required(login_url='/quotes/login_user/')
