@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
-{% block title %}Register{% endblock %}
-{% block register_active %}active{% endblock %}
+{% block title %}Update Profile{% endblock %}
+{% block profile_active %}active{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
+
     <div class="row">
-        <div class="col-sm-12 col-md-6">
+
+        <div class="col-sm-12 col-md-7">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>Register for an Account</h3>
+                    <h3>Update Profile</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
                     <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'quotes/form_template.html' %}
+                        {% include 'quotes/user_form_template.html' %}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">Submit</button>
@@ -19,16 +24,10 @@
                         </div>
                     </form>
                 </div>
-
-                <div class="panel-footer">
-                    Already have an account? <a href="{% url 'quotes:login_user' %}">Click here</a> to log in.
-                </div>
-
             </div>
         </div>
+
     </div>
 
 </div>
-
 {% endblock %}
-

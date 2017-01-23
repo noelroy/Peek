@@ -1,7 +1,9 @@
-{% extends 'quotes/base.html' %}
-{% block albums_active %}active{% endblock %}
+{% extends 'base.html' %}
+{% block quotes_active %}active{% endblock %}
 {% block body %}
 <div class="content container">
+    <a class="btn btn-success btn-share" href="{% url 'quotes:create_quote' %}">Add New Quote</a>
+    <hr>
     <div class="row">
         <div class="col-md-8">
             {% for quote in quote_list %}
@@ -10,8 +12,11 @@
                     <p>Created Date: {{ quote.created_date }}</p>
                 </div>
                 <p>{{ quote.quote_text|linebreaksbr }}</p>
-                <a href="{% url 'quotes:quote_detail' pk=quote.pk %}">
+                <a href="{% url 'quotes:update_quote' pk=quote.pk %}">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; Edit
+                </a>
+                <a href="{% url 'quotes:delete_quote' pk=quote.pk %}" onclick="return confirm('Are you sure you want to delete?')">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Delete
                 </a>
             </div>
             {% endfor %}
